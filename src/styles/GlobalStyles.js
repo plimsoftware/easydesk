@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
 * {
@@ -11,6 +11,7 @@ export default createGlobalStyle`
 body {
     font-family: sans-serif;
     color: black;
+    background-color: black;
 }
 
 `;
