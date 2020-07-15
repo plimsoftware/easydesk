@@ -16,9 +16,8 @@ export const Container = styled.section`
     }
 
     .right {
-      right: 0;
       left: 183px;
-      width: 100%;
+      right: 0;
       border-left: 1px solid white;
       background-color: #806F6F;
     }

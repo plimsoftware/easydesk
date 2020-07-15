@@ -4,7 +4,7 @@ import { Container} from './styled';
 import Menu from '../../components/Menu';
 import ListCases from '../../components/ListCases';
 
-export default function Header() {
+export default function Main() {
 
     return (
         <Container>

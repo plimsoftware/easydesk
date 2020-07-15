@@ -11,7 +11,13 @@ const isDev = require("electron-is-dev");
 let mainWindow;
 
 function createWindow() {
-    mainWindow = new BrowserWindow({ width: 1200, height: 980, icon: path.join(__dirname, './favicon.ico') });
+    mainWindow = new BrowserWindow({
+      width: 1200,
+      height: 800,
+      minWidth: 1200,
+      minHeight: 800,
+      icon: path.join(__dirname, './favicon.ico')
+    });
 
     mainWindow.loadURL(
         isDev

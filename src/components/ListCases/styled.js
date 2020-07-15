@@ -5,7 +5,14 @@ export const Container = styled.div`
     margin-left: 20px;
     overflow-y: scroll;
     height: 200px;
-    width: 80vw;
-    border: solid;
 `;
 
+export const MainContainer = styled.div`
+  display: block;
+  justify-components: center;
+
+    fieldset {
+      width: 95%;
+      margin: 10px;
+    }
+`;

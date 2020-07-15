@@ -1,11 +1,14 @@
 import React from 'react';
 
-import { Container } from './styled';
+import { Container, MainContainer } from './styled';
 
 export default function ListCases() {
 
     return (
-        <Container>
+      <MainContainer>
+        <fieldset>
+         <legend><strong>Lista de trabalho</strong></legend>
+          <Container>
             <p>lhouguigiougiugilg</p>
             <p>lhouguigiougiugilg</p>
             <p>lhouguigiougiugilg</p>
@@ -48,6 +51,19 @@ export default function ListCases() {
             <p>lhouguigiougiugilg</p>
             <p>lhouguigiougiugilg</p>
             <p>lhouguigiougiugilg</p>
-        </Container>
+          </Container>
+        </fieldset>
+        <fieldset>
+         <legend><strong>Detalhe</strong></legend>
+          <Container>
+            <p>lhouguigiougiugilg</p>
+            <p>lhouguigiougiugilg</p>
+            <p>lhouguigiougiugilg</p>
+            <p>lhouguigiougiugilg</p>
+            <p>lhouguigiougiugilg</p>
+            <p>lhouguigiougiugilg</p>
+          </Container>
+        </fieldset>
+      </MainContainer>
     );
 }
