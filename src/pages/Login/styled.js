@@ -33,6 +33,7 @@ export const Form = styled.form`
 `;
 
 export const Button = styled.button`
+  margin-top: 10px;
   background-color: #4D4D4D;
   color: white;
   border-radius: 10px;
