@@ -21,44 +21,9 @@ export function loginFailure(payload) {
   };
 }
 
-export function registerRequest(payload) {
+export function cleanMessage(payload) {
   return {
-    type: types.REGISTER_REQUEST,
+    type: types.CLEAN_MESSAGE,
     payload,
-  };
-}
-
-export function registerFailure(payload) {
-  return {
-    type: types.REGISTER_FAILURE,
-    payload,
-  };
-}
-
-export function registerUpdatedSuccess(payload) {
-  return {
-    type: types.REGISTER_UPDATED_SUCCESS,
-    payload,
-  };
-}
-
-export function registerCreatedSuccess(payload) {
-  return {
-    type: types.REGISTER_CREATED_SUCCESS,
-    payload,
-  };
-}
-
-export function updateAddress(payload) {
-  return {
-    type: types.UPDATE_ADDRESS,
-    payload,
-  };
-}
-
-export function removeAccount(id) {
-  return {
-    type: types.REMOVE_ACCOUNT,
-    id,
   };
 }

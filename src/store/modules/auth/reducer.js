@@ -5,8 +5,12 @@ const initalState = {
   isLoggedIn: false,
   token: false,
   client: {},
-  isLoading: false,
-  admin: false,
+  messageWinState: {
+    msgEnabled: false,
+    msg: '',
+    msgType: ''
+  },
+
 };
 
 export default function (state = initalState, action) {
@@ -16,58 +20,32 @@ export default function (state = initalState, action) {
       newState.isLoggedIn = true;
       newState.token = action.payload.token;
       newState.client = action.payload.client;
-      newState.admin = action.payload.admin;
-      newState.isLoading = false;
       return newState;
     }
 
     case types.LOGIN_FAILURE: {
       delete axios.defaults.headers.Authorization;
       const newState = { ...initalState };
+      newState.messageWinState = {
+        msgEnabled: true,
+        msg: action.payload.msg,
+        msgType: 'error'
+      };
       return newState;
     }
 
     case types.LOGIN_REQUEST: {
       const newState = { ...state };
-      newState.isLoading = true;
       return newState;
     }
 
-    case types.REGISTER_REQUEST: {
+    case types.CLEAN_MESSAGE: {
       const newState = { ...state };
-      newState.isLoading = true;
-      return newState;
-    }
-
-    case types.REGISTER_UPDATED_SUCCESS: {
-      const newState = { ...state };
-      newState.client.name = action.payload.name;
-      newState.client.email = action.payload.email;
-      newState.isLoading = false;
-      return newState;
-    }
-
-    case types.REGISTER_CREATED_SUCCESS: {
-      const newState = { ...state };
-      newState.isLoading = false;
-      return newState;
-    }
-
-    case types.REGISTER_FAILURE: {
-      const newState = { ...state };
-      newState.isLoading = false;
-      return newState;
-    }
-
-    case types.UPDATE_ADDRESS: {
-      const newState = { ...state };
-      newState.isLoading = false;
-      return newState;
-    }
-
-    case types.REMOVE_ACCOUNT: {
-      const newState = { ...state };
-      newState.isLoading = false;
+      newState.messageWinState = {
+        msgEnabled: false,
+        msg: '',
+        msgType: ''
+      };
       return newState;
     }
 

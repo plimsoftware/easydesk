@@ -13,13 +13,14 @@ export default function Login() {
   const [userid, setUserID] = useState ('');
   const [password, setPassword] = useState ('');
   const [profileList, setProfileList] = useState([]);
-  const [profile, setProfile] = useState('');
+  const [profile, setProfile] = useState('Administrator');
+  const { msgEnabled, msg, msgType } = useSelector((state) => state.auth.messageWinState);
 
-  // ***** MSG Component ************
-  const [msgEnabled, setMsgEnabled] = useState(false);
-  const [msg, setMsg] = useState('');
-  const [msgType, setMsgType] = useState('info');
-  // ***** MSG Component ************
+  /* ***** MSG Component ************
+  const [msgEnabled, setMsgEnabled] = useState(messageWinState.msgEnabled);
+  const [msg, setMsg] = useState(messageWinState.msg);
+  const [msgType, setMsgType] = useState(messageWinState.msgType);
+  ***** MSG Component ************ */
 
   const dispatch = useDispatch();
 
@@ -34,10 +35,8 @@ export default function Login() {
         const data = get(err, 'response.data', {});
         const errors = get(data, 'errors', []);
         if (status === 401) {
-          // toast.warn('Ocorreu um erro com a validação da conta');
           history.push('/');
         }
-        // toast.error(errors[0]);
       }
     }
 
@@ -46,15 +45,13 @@ export default function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setMsg('Está a fazer Login')
-    setMsgType('error');
-    setMsgEnabled(!msgEnabled);
-    // dispatch(actions.loginRequest({ userid, password }));
+
+    dispatch(actions.loginRequest({ userid, password, profile }));
   }
 
   return (
       <Container>
-        {msgEnabled? <MessageWin message={msg} msgType={msgType} msgClose={() => setMsgEnabled(!msgEnabled)} /> : <></>}
+        <MessageWin msgEnabled={msgEnabled} message={msg} msgType={msgType} />
         <img src={logo} alt="Easy Desk logo" />
         <span style={{ fontSize: '10px'}}>V 1.0.0</span>
         <h1>Welcome to Easy Desk Management</h1>
