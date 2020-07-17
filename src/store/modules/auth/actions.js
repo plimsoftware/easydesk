@@ -21,6 +21,13 @@ export function loginFailure(payload) {
   };
 }
 
+export function logout(payload) {
+  return {
+    type: types.LOGOUT,
+    payload,
+  };
+}
+
 export function cleanMessage(payload) {
   return {
     type: types.CLEAN_MESSAGE,

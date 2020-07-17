@@ -4,6 +4,7 @@ export const Container = styled.section`
     .split {
       position: fixed;
       overflow-x: hidden;
+      overflow-y: hidden;
       margin-top: 54px;
       height: 100%;
     }
@@ -19,7 +20,7 @@ export const Container = styled.section`
       left: 183px;
       right: 0;
       border-left: 1px solid white;
-      background-color: #806F6F;
+      background-color: #979797;
     }
 
     .centered {

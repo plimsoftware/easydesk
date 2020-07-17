@@ -36,4 +36,9 @@ export const NavRight = styled.div`
     font-size: 15px;
     color: white;
     align-content: center;
+    margin-top: 10px;
+
+    span {
+      cursor: pointer;
+    }
 `;

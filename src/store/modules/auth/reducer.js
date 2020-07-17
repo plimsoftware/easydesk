@@ -34,6 +34,12 @@ export default function (state = initalState, action) {
       return newState;
     }
 
+    case types.LOGOUT: {
+      delete axios.defaults.headers.Authorization;
+      const newState = { ...initalState };
+      return newState;
+    }
+
     case types.LOGIN_REQUEST: {
       const newState = { ...state };
       return newState;
