@@ -24,7 +24,7 @@ export default function Header() {
                     <img src={Logo} alt="EasyDesk" />
                 </NavLeft>
                 <NavRight>
-                  { isLoggedIn ? <span title="Logout" onClick={handleClick}>Logout <FaPowerOff size={15} /> </span> : <></>}
+                  { isLoggedIn ? <span title="Sign out" onClick={handleClick}>Sign out <FaPowerOff size={15} /> </span> : <></>}
                 </NavRight>
             </NavHeader>
         </Nav>

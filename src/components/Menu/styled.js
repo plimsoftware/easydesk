@@ -49,6 +49,18 @@ export const Container = styled.div`
       margin-bottom: 3px;
     }
 
+    .buttonAdm {
+      position: fixed;
+      transition: all 500ms;
+      width: 170px;
+      height: 50px;
+      top: 260px;
+      border-radius: 10px;
+      background-color: #3E2776;
+      color: #F5F5F5;
+      margin-bottom: 3px;
+    }
+
     .incMenu {
       transition: all 500ms;
       border: 0.5px solid #979797;
@@ -70,6 +82,16 @@ export const Container = styled.div`
     }
 
     .chgMenu {
+      transition: all 500ms;
+      border: 1px solid #979797;
+      position: fixed;
+      border-radius: 20px;
+      width: 170px;
+      height: 600px;
+      left: -85px;
+    }
+
+    .admMenu {
       transition: all 500ms;
       border: 1px solid #979797;
       position: fixed;

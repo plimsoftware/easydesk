@@ -80,7 +80,7 @@ export default function Login() {
               </option>
             ))}
           </select>
-          <Button type="submit">Entrar</Button>
+          <Button type="submit">Sign in</Button>
         </Form>
       </Container>
     );
