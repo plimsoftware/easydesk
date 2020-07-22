@@ -32,8 +32,6 @@ export default function Login() {
         setProfileList(data);
       } catch (err) {
         const status = get(err, 'response.status', 0);
-        const data = get(err, 'response.data', {});
-        const errors = get(data, 'errors', []);
         if (status === 401) {
           history.push('/');
         }

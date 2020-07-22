@@ -3,6 +3,10 @@ import axios from '../../../services/axios';
 
 const initalState = {
   isLoggedIn: false,
+  isEditing: {
+    isEditing: false,
+    response: ''
+  },
   token: false,
   client: {},
   messageWinState: {
@@ -40,8 +44,27 @@ export default function (state = initalState, action) {
       return newState;
     }
 
+    case types.ISEDITING: {
+      const newState = { ...state };
+      newState.isEditing = {
+        isEditing: action.payload.isEditing,
+        response: ''
+      };
+      return newState;
+    }
+
     case types.LOGIN_REQUEST: {
       const newState = { ...state };
+      return newState;
+    }
+
+    case types.SET_MESSAGE: {
+      const newState = { ...state };
+      newState.messageWinState = {
+        msgEnabled: action.payload.msgEnabled,
+        msg: action.payload.msg,
+        msgType: action.payload.msgType
+      };
       return newState;
     }
 

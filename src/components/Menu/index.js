@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { Container } from './styled';
+import * as actions from '../../store/modules/auth/actions';
 
-export default function Menu() {
+export default function Menu({ setPage, waitMessage, setWaitMessage }) {
   const { profile } = useSelector((state) => state.auth.client);
+  const { isEditing } = useSelector((state) => state.auth);
   const [incActive, setIncActive] = useState(false);
   const [reqActive, setReqActive] = useState(false);
   const [chgActive, setChgActive] = useState(false);
@@ -17,6 +20,21 @@ export default function Menu() {
   const [reqMenuValue, setReqMenuValue] = useState({top: '7000px'});
   const [chgMenuValue, setChgMenuValue] = useState({top: '7000px'});
   const [admMenuValue, setAdmMenuValue] = useState({top: '7000px'});
+
+  let waitQuestion = false;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (waitMessage === true) {
+      dispatch(actions.isEditing({ isEditing: false, response: '' }));
+      resetMenu();
+      setPage('Home');
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      waitQuestion = false;
+      setWaitMessage(false);
+    }
+  }, [waitMessage, dispatch, setPage]);
 
   const resetMenu = () => {
     setIncActive(false);
@@ -82,10 +100,21 @@ export default function Menu() {
   };
 
   const handleAdm = () => {
-    if (admActive) {
+    if (isEditing.isEditing) {
+      waitQuestion = true;
+      dispatch(actions.setMessage({
+        msgEnabled: true,
+        msg: 'Are you sure? You will lose the data you are editing.',
+        msgType: 'question'
+      }));
+    }
+
+    if (admActive && !waitQuestion) {
       resetMenu();
+      setPage('Home');
       return;
     }
+
     setIncActive(false);
     setIncLeftValue({left: '-300px'});
     setReqActive(false);
@@ -124,7 +153,11 @@ export default function Menu() {
               <button type="button" className="menuButtom">Create Change</button>
             </div>
             <div className="admMenu" style={admMenuValue}>
-              <button type="button" className="menuButtom">Company</button>
+              <button type="button" className="menuButtom" onClick={() => setPage('AdminCompanies')}>Companies</button>
+              <button type="button" className="menuButtom">Clients</button>
+              <button type="button" className="menuButtom">Categories</button>
+              <button type="button" className="menuButtom">Users</button>
+              <button type="button" className="menuButtom">Teams</button>
             </div>
         </Container>
     );

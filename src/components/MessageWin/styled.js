@@ -8,17 +8,25 @@ export const Container = styled.div`
     width: 33%;
     height: 100px;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-itens: center;
 
     p {
-      font-size: 15px;
+      font-size: 12px;
+      width: 100%;
       margin-top: 25px;
+      text-align: center;
     }
 
     button {
       width: 100px;
       height: 20px;
-      -radius: 5px;
-      margin-top: 10px
+      border-radius: 5px;
+      margin-top: 10px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
     }
 `;
 

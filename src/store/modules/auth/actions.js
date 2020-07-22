@@ -28,9 +28,23 @@ export function logout(payload) {
   };
 }
 
+export function isEditing(payload) {
+  return {
+    type: types.ISEDITING,
+    payload,
+  };
+}
+
 export function cleanMessage(payload) {
   return {
     type: types.CLEAN_MESSAGE,
+    payload,
+  };
+}
+
+export function setMessage(payload) {
+  return {
+    type: types.SET_MESSAGE,
     payload,
   };
 }
