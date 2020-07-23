@@ -5,7 +5,7 @@ import { MainContainer, Container } from './styled';
 import * as actions from '../../store/modules/auth/actions';
 
 
-export default function MessageWin({ msgEnabled, message , msgType, setWaitMessage }) {
+export default function MessageWin({ msgEnabled, message , msgType, wheremsg, setWaitMessage }) {
   const dispatch = useDispatch();
 
   if (!msgEnabled) return <></>;
@@ -20,7 +20,7 @@ export default function MessageWin({ msgEnabled, message , msgType, setWaitMessa
           <button type="button" onClick={() => {
             dispatch(actions.cleanMessage());
             dispatch(actions.isEditing({ isEditing: false, response: 'ok' }));
-            setWaitMessage(true);
+            setWaitMessage(wheremsg);
             }}>Ok</button>
           <button type="button" onClick={() => {
             dispatch(actions.cleanMessage());

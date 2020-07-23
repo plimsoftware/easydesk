@@ -99,14 +99,10 @@ export const MainContainer = styled.div`
     }
 
     .tdname {
-      width: 35%;
+      width: 45%;
     }
 
-    .tdlocation {
-      width: 20%;
-    }
-
-    .tdsp {
+    .tdlst {
       width: 20%;
     }
 
@@ -119,19 +115,15 @@ export const MainContainer = styled.div`
     }
 
     .thname {
-      width: 37%;
+      width: 58%;
     }
 
-    .thlocation {
-      width: 21%;
-    }
-
-    .thsp {
-      width: 21%;
+    .thlst {
+      width: 25%;
     }
 
     .thstatus {
-      width: 10%;
+      width: 15%;
     }
 `;
 

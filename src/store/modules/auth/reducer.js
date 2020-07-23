@@ -12,7 +12,8 @@ const initalState = {
   messageWinState: {
     msgEnabled: false,
     msg: '',
-    msgType: ''
+    msgType: '',
+    wheremsg: ''
   },
 
 };
@@ -63,7 +64,8 @@ export default function (state = initalState, action) {
       newState.messageWinState = {
         msgEnabled: action.payload.msgEnabled,
         msg: action.payload.msg,
-        msgType: action.payload.msgType
+        msgType: action.payload.msgType,
+        wheremsg: action.payload.wheremsg
       };
       return newState;
     }
@@ -73,7 +75,8 @@ export default function (state = initalState, action) {
       newState.messageWinState = {
         msgEnabled: false,
         msg: '',
-        msgType: ''
+        msgType: '',
+        wheremsg: ''
       };
       return newState;
     }

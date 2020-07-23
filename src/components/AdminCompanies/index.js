@@ -221,6 +221,8 @@ export default function AdminCompanies() {
           msgType: 'info'
         }));
 
+        dispatch(actions.isEditing({ isEditing: true }));
+
       } catch (err) {
         console.log(err);
       }

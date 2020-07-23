@@ -26,10 +26,26 @@ export default function Menu({ setPage, waitMessage, setWaitMessage }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (waitMessage === true) {
+    if (waitMessage === 'adminout') {
       dispatch(actions.isEditing({ isEditing: false, response: '' }));
       resetMenu();
       setPage('Home');
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      waitQuestion = false;
+      setWaitMessage(false);
+    }
+
+    if (waitMessage === 'admingoteams') {
+      dispatch(actions.isEditing({ isEditing: false, response: '' }));
+      setPage('AdminTeams');
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      waitQuestion = false;
+      setWaitMessage(false);
+    }
+
+    if (waitMessage === 'admingocompanies') {
+      dispatch(actions.isEditing({ isEditing: false, response: '' }));
+      setPage('AdminCompanies');
       // eslint-disable-next-line react-hooks/exhaustive-deps
       waitQuestion = false;
       setWaitMessage(false);
@@ -105,7 +121,8 @@ export default function Menu({ setPage, waitMessage, setWaitMessage }) {
       dispatch(actions.setMessage({
         msgEnabled: true,
         msg: 'Are you sure? You will lose the data you are editing.',
-        msgType: 'question'
+        msgType: 'question',
+        wheremsg: 'adminout'
       }));
     }
 
@@ -124,6 +141,22 @@ export default function Menu({ setPage, waitMessage, setWaitMessage }) {
     setAdmActive(true);
     setAdmMenuValue({top: '110px'})
     setAdmLeftValue({top: '50px', left: '-85px'});
+  };
+
+  const handleAdmPage = (page, msggo) => {
+    if (isEditing.isEditing) {
+      waitQuestion = true;
+      dispatch(actions.setMessage({
+        msgEnabled: true,
+        msg: 'Are you sure? You will lose the data you are editing.',
+        msgType: 'question',
+        wheremsg: msggo
+      }));
+    }
+
+    if (admActive && !waitQuestion) {
+      setPage(page);
+    }
   };
 
   return (
@@ -153,11 +186,11 @@ export default function Menu({ setPage, waitMessage, setWaitMessage }) {
               <button type="button" className="menuButtom">Create Change</button>
             </div>
             <div className="admMenu" style={admMenuValue}>
-              <button type="button" className="menuButtom" onClick={() => setPage('AdminCompanies')}>Companies</button>
+              <button type="button" className="menuButtom" onClick={() => handleAdmPage('AdminCompanies', 'admingocompanies')}>Companies</button>
               <button type="button" className="menuButtom">Clients</button>
               <button type="button" className="menuButtom">Categories</button>
               <button type="button" className="menuButtom">Users</button>
-              <button type="button" className="menuButtom">Teams</button>
+              <button type="button" className="menuButtom" onClick={() => handleAdmPage('AdminTeams', 'admingoteams')}>Teams</button>
             </div>
         </Container>
     );

@@ -5,13 +5,14 @@ import { Container} from './styled';
 import Menu from '../../components/Menu';
 import ListCases from '../../components/ListCases';
 import AdminCompanies from '../../components/AdminCompanies';
+import AdminTeams from '../../components/AdminTeams';
 import MessageWin from '../../components/MessageWin';
 
 export default function Main() {
 
   const [currentPage, setCurrentPage] = useState('Home');
-  const [waitMessage, setWaitMessage] = useState(false);
-  const { msgEnabled, msg, msgType } = useSelector((state) => state.auth.messageWinState);
+  const [waitMessage, setWaitMessage] = useState('');
+  const { msgEnabled, msg, msgType, wheremsg } = useSelector((state) => state.auth.messageWinState);
 
     return (
         <Container>
@@ -25,8 +26,14 @@ export default function Main() {
             <div className="split right">
                 {currentPage === 'Home'? <ListCases /> : <></>}
                 {currentPage === 'AdminCompanies'? <AdminCompanies /> : <></>}
+                {currentPage === 'AdminTeams'? <AdminTeams /> : <></>}
             </div>
-        <MessageWin msgEnabled={msgEnabled} message={msg} msgType={msgType} setWaitMessage={(status) => setWaitMessage(status)}/>
+        <MessageWin
+          msgEnabled={msgEnabled}
+          message={msg}
+          msgType={msgType}
+          wheremsg={wheremsg}
+          setWaitMessage={(status) => setWaitMessage(status)}/>
         </Container>
 
     );
