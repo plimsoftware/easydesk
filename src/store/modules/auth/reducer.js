@@ -8,6 +8,7 @@ const initalState = {
     response: ''
   },
   token: false,
+  actualId: 0,
   client: {},
   messageWinState: {
     msgEnabled: false,
@@ -25,6 +26,7 @@ export default function (state = initalState, action) {
       newState.isLoggedIn = true;
       newState.token = action.payload.token;
       newState.client = action.payload.client;
+      newState.actualId = action.payload.id;
       return newState;
     }
 

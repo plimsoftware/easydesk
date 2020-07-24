@@ -14,11 +14,15 @@ function* loginRequest({ payload }) {
     }
 
     const response = yield call(axios.post, '/tokens', payload);
-    yield put(actions.loginSuccess({ ...response.data }));
+    yield put(actions.loginSuccess({ ...response.data, id: data.id,  }));
 
     axios.defaults.headers.Authorization = `Bearer ${response.data.token}`;
 
-    history.push('/main');
+    if (data.initialpassword) {
+      history.push('/changepass');
+    } else {
+      history.push('/main');
+    }
 
   } catch (e) {
     yield put(actions.loginFailure({ msg: 'Username or password invalid' }));
