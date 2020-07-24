@@ -6,6 +6,7 @@ import Menu from '../../components/Menu';
 import ListCases from '../../components/ListCases';
 import AdminCompanies from '../../components/AdminCompanies';
 import AdminTeams from '../../components/AdminTeams';
+import AdminUsers from '../../components/AdminUsers';
 import MessageWin from '../../components/MessageWin';
 
 export default function Main() {
@@ -27,6 +28,7 @@ export default function Main() {
                 {currentPage === 'Home'? <ListCases /> : <></>}
                 {currentPage === 'AdminCompanies'? <AdminCompanies /> : <></>}
                 {currentPage === 'AdminTeams'? <AdminTeams /> : <></>}
+                {currentPage === 'AdminUsers'? <AdminUsers /> : <></>}
             </div>
         <MessageWin
           msgEnabled={msgEnabled}
