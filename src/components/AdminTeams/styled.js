@@ -52,6 +52,18 @@ export const ContainerData = styled.div`
         background-color: #bfbfbf;
       }
     }
+
+    input {
+      margin-right: 10px;
+    }
+
+    fieldset {
+      height: 100px;
+    }
+
+    .spanmember {
+      padding: 20px;
+    }
 `;
 
 export const MainContainer = styled.div`

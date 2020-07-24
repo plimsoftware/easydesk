@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { FaUndo } from 'react-icons/fa';
+import { FaUndo, FaTrashAlt } from 'react-icons/fa';
 
 import { Container, ContainerData, MainContainer, SelectStyle } from './styled';
 import * as actions from '../../store/modules/auth/actions';
@@ -13,6 +13,7 @@ export default function AdminTeams() {
   const [teamList, setTeamList] = useState([]);
   const [actualTeam, setActualTeam] = useState(0);
   const [name, setName] = useState ('');
+  const [username, setUsername] = useState ('');
   const [active, setActive] = useState ('');
   const [localSupport, setLocalSupport] = useState (false);
   const [teamMembers, setTeamMembers] = useState ('');
@@ -66,6 +67,7 @@ export default function AdminTeams() {
   function clearData() {
     setName('');
     setActive('');
+    setUsername('');
     setLocalSupport(false);
   }
 
@@ -103,6 +105,12 @@ export default function AdminTeams() {
     setDeleteAsk(false);
   };
 
+  const handleDeleteAskMember = (e) => {
+    const exclamation = e.currentTarget.nextSibling;
+    exclamation.setAttribute('display', 'inline');
+    e.currentTarget.remove();
+  };
+
   async function handleDelete() {
     try {
       await axios.delete(`/teams/${actualTeam}`);
@@ -124,6 +132,71 @@ export default function AdminTeams() {
       console.log(err);
     }
   };
+
+  async function handleDeleteMember(member) {
+    try {
+      await axios.delete(`/teammembers/${member.id}`);
+
+      setRunOnce(true);
+
+      dispatch(actions.setMessage({
+        msgEnabled: true,
+        msg: `Member ${member.name} removed`,
+        msgType: 'info'
+      }));
+
+      handleCancelEdit();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function handleAddMember() {
+    if (teamMembers.filter( member => member.User.username === username).length > 0) {
+
+      dispatch(actions.setMessage({
+        msgEnabled: true,
+        msg: `Username already associated`,
+        msgType: 'error'
+      }));
+
+      handleCancelEdit();
+      return;
+    }
+
+    await axios.get(`/users/${username}`)
+    .then( response => {
+      try {
+        axios.post('/teammembers/', {
+          userid: response.data.id,
+          teamid: actualTeam,
+          active: true
+        });
+
+        setRunOnce(true);
+
+        dispatch(actions.setMessage({
+          msgEnabled: true,
+          msg: `Username ${username} added`,
+          msgType: 'info'
+        }));
+
+        handleCancelEdit();
+      } catch (err) {
+        console.log(err);
+      }
+    })
+    .catch(() => {
+        dispatch(actions.setMessage({
+          msgEnabled: true,
+          msg: `Username does not exists`,
+          msgType: 'error'
+        }));
+
+        handleCancelEdit();
+        return;
+      } );
+  }
 
   const handleTrClick = (teamId) => {
     if (actualTeam === -1 || editing || deleteAsk) return;
@@ -335,24 +408,51 @@ export default function AdminTeams() {
                   }
                 </span>
               </form>
-              {editing && <fieldset>
-                  <legend><strong>Team members</strong></legend>
-                  <table>
-                    <tbody>
-                      {teamMembers.length !== 0 ? (
-                      teamMembers.map((member) => (
-                        <tr key={member.id} onClick={() => handleTrClick(member.id)}>
-                          <td>{member.User.name} ({member.User.username})</td>
-                        </tr>
-                      ))
-                      ) : (
-                      <tr>
-                        <td>There are no Members</td>
-                      </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </fieldset>}</>
+              {editing &&
+              <>
+              <fieldset>
+                <legend><strong>Team members</strong></legend>
+                {teamMembers.length !== 0 ? (
+                    teamMembers.map((member) => (
+                      <span key={member.id} >
+                        <span className="spanmember">
+                        {member.User.name} ({member.User.username})
+                        </span>
+                        <span>
+                        <FaTrashAlt
+                          title="Remove Member"
+                          onClick={handleDeleteAskMember}
+                          cursor="pointer"
+                          size="13"
+                        />
+                        <FaTrashAlt
+                          color="red"
+                          title="Confirm remove"
+                          display="none"
+                          cursor="pointer"
+                          onClick={() => handleDeleteMember(member)}
+                          size="13"
+                        />
+                        </span>
+                      </span>
+                    ))
+                    ) : (
+                    <span className="spanmember">
+                      There are no Members
+                    </span>
+                    )}
+              </fieldset>
+              <input
+                type="text"
+                className="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Insert Username"
+              />
+              <button type="button" onClick={handleAddMember}>Add Member</button>
+              </>
+            }
+          </>
             :
               <>
                 <form>
@@ -422,21 +522,17 @@ export default function AdminTeams() {
                 </form>
                 <fieldset>
                   <legend><strong>Team members</strong></legend>
-                  <table>
-                    <tbody>
                       {teamMembers.length !== 0 ? (
                       teamMembers.map((member) => (
-                        <tr key={member.id} onClick={() => handleTrClick(member.id)}>
-                          <td>{member.User.name} ({member.User.username})</td>
-                        </tr>
+                        <span className="spanmember" key={member.id}>
+                          {member.User.name} ({member.User.username})
+                        </span>
                       ))
                       ) : (
-                      <tr>
-                        <td>There are no Members</td>
-                      </tr>
+                      <span className="spanmember">
+                        There are no Members
+                      </span>
                       )}
-                    </tbody>
-                  </table>
                 </fieldset>
               </>
             }

@@ -184,8 +184,6 @@ export default function AdminUsers() {
     }
 
     try {
-      console.log('username', username);
-      console.log('profile', profile);
       await axios.post('/userprof/', {
         username,
         profile,
@@ -467,8 +465,8 @@ export default function AdminUsers() {
                     <legend><strong>User profiles</strong></legend>
                     {userProfiles.length !== 0 ? (
                         userProfiles.map((profile) => (
-                          <>
-                            <span className="spanprofile" key={profile.profile}>
+                          <span key={profile.profile}>
+                            <span className="spanprofile">
                               {profile.profile}
                             </span>
                             <span>
@@ -487,7 +485,7 @@ export default function AdminUsers() {
                               size="13"
                             />
                             </span>
-                          </>
+                          </span>
                         ))
                         ) : (
                         <span className="spanprofile">

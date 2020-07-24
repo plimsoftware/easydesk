@@ -199,6 +199,7 @@ export default function Menu({ setPage, waitMessage, setWaitMessage }) {
               <button type="button" className="menuButtom">Categories</button>
               <button type="button" className="menuButtom" onClick={() => handleAdmPage('AdminUsers', 'admingousers')}>Users</button>
               <button type="button" className="menuButtom" onClick={() => handleAdmPage('AdminTeams', 'admingoteams')}>Teams</button>
+              <button type="button" className="menuButtom">Profiles</button>
             </div>
         </Container>
     );
