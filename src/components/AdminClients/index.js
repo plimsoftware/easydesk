@@ -10,14 +10,17 @@ import formatData from '../../modules/FormatData'
 
 import axios from '../../services/axios';
 
-export default function AdminClients() {
+export default function AdminCompanies() {
+  const [clientsList, setClientsList] = useState([]);
   const [companyList, setCompanyList] = useState([]);
-  const [teamList, setTeamList] = useState([]);
-  const [actualCompany, setActualCompany] = useState(0);
+  const [actualClient, setActualClient] = useState(0);
   const [name, setName] = useState ('');
   const [address, setAddress] = useState ('');
   const [locationcp, setLocationcp] = useState ('');
   const [location, setLocation] = useState ('');
+  const [companyName, setCompanyName] = useState ('');
+  const [companyID, setCompanyID] = useState ('');
+  const [companyFilter, setCompanyFilter] = useState ('');
   const [localSupport, setLocalSupport] = useState ('');
   const [phone, setPhone] = useState ('');
   const [email, setEmail] = useState ('');
@@ -35,27 +38,34 @@ export default function AdminClients() {
   useEffect(() => {
     async function getData() {
       try {
+        if (companyFilter === '') {
+          const responseClient = await axios.get('/clients/');
+          setClientsList(responseClient.data);
+        } else {
+          const responseClient = await axios.get(`/clients/?companyid=${companyFilter}`);
+          setClientsList(responseClient.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+
+      try {
         const responseCompany = await axios.get('/company/');
         setCompanyList(responseCompany.data);
       } catch (err) {
         console.log(err);
       }
 
-      try {
-        const responseTeam = await axios.get('/teams/?ls=true');
-        setTeamList(responseTeam.data);
-      } catch (err) {
-        console.log(err);
-      }
-
-      if (actualCompany > 0) {
+      if (actualClient > 0) {
         try {
-          const { data } = await axios.get(`/company/${actualCompany}`);
+          const { data } = await axios.get(`/clients/${actualClient}`);
           setName(data.name);
           setAddress(data.address);
           setLocationcp(data.locationcp);
           setLocation(data.location);
-          setLocalSupport(data.defaultlocalsupport);
+          setLocalSupport(data.Company.defaultlocalsupport);
+          setCompanyName(data.Company.name);
+          setCompanyID(data.companyid);
           setPhone(data.phone);
           setEmail(data.email);
           setActive(data.active);
@@ -72,11 +82,11 @@ export default function AdminClients() {
     }
 
     if (runOnce) getData();
-  }, [runOnce, actualCompany]);
+  }, [runOnce, actualClient, companyFilter]);
 
   const handleCreate = () => {
     clearData();
-    setActualCompany(-1);
+    setActualClient(-1);
     dispatch(actions.isEditing({ isEditing: true }));
   }
 
@@ -84,15 +94,17 @@ export default function AdminClients() {
     setName('');
     setAddress('');
     setLocationcp('');
-    setLocalSupport('');
     setLocation('');
+    setLocalSupport('');
+    setCompanyID('');
+    setCompanyName('');
     setPhone('');
     setEmail('');
     setActive('');
   }
 
   const handleCancelCreate = () => {
-    setActualCompany(0);
+    setActualClient(0);
     setEditing(false);
     clearData();
     dispatch(actions.isEditing({ isEditing: false }));
@@ -127,9 +139,9 @@ export default function AdminClients() {
 
   async function handleDelete() {
     try {
-      await axios.delete(`/company/${actualCompany}`);
+      await axios.delete(`/clients/${actualClient}`);
 
-      setActualCompany(0);
+      setActualClient(0);
       setRunOnce(true);
       setDeleteAsk(false);
       setEditing(false);
@@ -138,7 +150,7 @@ export default function AdminClients() {
 
       dispatch(actions.setMessage({
         msgEnabled: true,
-        msg: `Company ${name} deleted`,
+        msg: `Client ${name} deleted`,
         msgType: 'info'
       }));
 
@@ -147,19 +159,19 @@ export default function AdminClients() {
     }
   };
 
-  const handleTrClick = (companyId) => {
-    if (actualCompany === -1 || editing || deleteAsk) return;
-    setActualCompany(companyId);
+  const handleTrClick = (clientId) => {
+    if (actualClient === -1 || editing || deleteAsk) return;
+    setActualClient(clientId);
     setRunOnce(true);
   };
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (name.length < 5 || name.length > 100) {
+    if (name.length < 4 || name.length > 200) {
       dispatch(actions.setMessage({
         msgEnabled: true,
-        msg: 'Company name must have between 5 and 100 characters',
+        msg: 'Client name must have between 4 and 200 characters',
         msgType: 'error'
       }));
       return;
@@ -174,10 +186,10 @@ export default function AdminClients() {
       return;
     }
 
-    if (localSupport === '') {
+    if (companyID === '') {
       dispatch(actions.setMessage({
         msgEnabled: true,
-        msg: 'Select a Default Local Support Team',
+        msg: 'Select a Company',
         msgType: 'error'
       }));
       return;
@@ -221,23 +233,23 @@ export default function AdminClients() {
 
     if (!editing) {
       try {
-        const newCompany = await axios.post('/company/', {
+        const newClient = await axios.post('/clients/', {
           name,
           address,
           locationcp,
           location,
-          defaultlocalsupport: localSupport,
+          companyid: companyID,
           phone,
           email,
           active: true
         });
 
-        setActualCompany(newCompany.data.id);
+        setActualClient(newClient.data.id);
         setRunOnce(true);
 
         dispatch(actions.setMessage({
           msgEnabled: true,
-          msg: `Company ${name} created`,
+          msg: `Client ${name} created`,
           msgType: 'info'
         }));
 
@@ -248,14 +260,14 @@ export default function AdminClients() {
       }
     } else {
       try {
-        await axios.put(`/company/${actualCompany}`, {
+        await axios.put(`/clients/${actualClient}`, {
           name,
           address,
           locationcp,
           location,
+          companyid: companyID,
           phone,
           email,
-          defaultlocalsupport: localSupport,
           active
         });
 
@@ -263,7 +275,7 @@ export default function AdminClients() {
 
         dispatch(actions.setMessage({
           msgEnabled: true,
-          msg: `Company ${name} updated`,
+          msg: `Client ${name} updated`,
           msgType: 'info'
         }));
 
@@ -278,30 +290,58 @@ export default function AdminClients() {
   return (
       <MainContainer>
         <fieldset>
-         <legend><strong>Companies List</strong></legend>
+         <legend><strong>Clients List</strong></legend>
           <section>
               <div className="thid">Id</div>
-              <div className="thname">Company name</div>
+              <div className="thname">Client name</div>
               <div className="thlocation">Location</div>
-              <div className="thsp">Default Local Support</div>
+              <div className="thsp">Company</div>
               <div className="thstatus">Status</div>
             </section>
           <Container>
             <table>
               <tbody>
-                {companyList.length !== 0 ? (
-                  companyList.map((company) => (
-                    <tr key={company.id} onClick={() => handleTrClick(company.id)}>
-                      <td className="tdid">{company.id}</td>
-                      <td className="tdname">{company.name}</td>
-                      <td className="tdlocation">{company.location}</td>
-                      <td className="tdsp">{company.defaultlocalsupport}</td>
-                      <td className="tdstatus">{company.active ? 'Active' : 'Disabled' }</td>
+                <tr>
+                  <td className="tdid"></td>
+                  <td className="tdname"></td>
+                  <td className="tdlocation"></td>
+                  <td className="tdsp">
+                    <SelectStyleLS
+                      id="company"
+                      name="company"
+                      value={companyFilter}
+                      onChange={(e) => {
+                        setCompanyFilter(e.currentTarget.value);
+                        setRunOnce(true);
+                      }}
+                    >
+                    {companyFilter === '' ? <option value="" hidden>Filter by ...</option> : <option value="">All</option>}
+                    {companyList.map((company) => (
+                        <option value={company.id} key={company.id}>
+                          {company.name}
+                        </option>
+                      ))}
+                    </SelectStyleLS>
+                  </td>
+                  <td className="tdstatus"></td>
+                </tr>
+                {clientsList.length !== 0 ? (
+                  clientsList.map((client) => (
+                    <tr key={client.id} onClick={() => handleTrClick(client.id)}>
+                      <td className="tdid">{client.id}</td>
+                      <td className="tdname">{client.name}</td>
+                      <td className="tdlocation">{client.location}</td>
+                      <td className="tdsp">{client.Company.name}</td>
+                      <td className="tdstatus">{client.active ? 'Active' : 'Disabled' }</td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td>There are no Companies</td>
+                    <td className="tdid"></td>
+                    <td className="tdname">There are no Clients</td>
+                    <td className="tdlocation"></td>
+                    <td className="tdsp"></td>
+                    <td className="tdstatus"></td>
                   </tr>
                 )}
               </tbody>
@@ -309,13 +349,13 @@ export default function AdminClients() {
           </Container>
         </fieldset>
         <div>
-          {actualCompany === -1 && <button type="button" onClick={handleCancelCreate}>Cancel Creation</button>}
-          {actualCompany === 0 && <button type="button" onClick={handleCreate}>Create Company</button>}
-          {actualCompany > 0 && (editing || deleteAsk) && <button type="button" disabled>Create Company</button>}
-          {actualCompany > 0 && (!editing && !deleteAsk) && <button type="button" onClick={handleCreate}>Create Company</button>}
-          {actualCompany < 1 || deleteAsk ?
-            <button type="button" disabled>Edit Company</button> :
-            <button type="button" onClick={handleEdit}>Edit Company</button>
+          {actualClient === -1 && <button type="button" onClick={handleCancelCreate}>Cancel Creation</button>}
+          {actualClient === 0 && <button type="button" onClick={handleCreate}>Create Client</button>}
+          {actualClient > 0 && (editing || deleteAsk) && <button type="button" disabled>Create Client</button>}
+          {actualClient > 0 && (!editing && !deleteAsk) && <button type="button" onClick={handleCreate}>Create Client</button>}
+          {actualClient < 1 || deleteAsk ?
+            <button type="button" disabled>Edit Client</button> :
+            <button type="button" onClick={handleEdit}>Edit Client</button>
             }
           {deleteAsk && <FaUndo
             cursor="pointer"
@@ -326,9 +366,9 @@ export default function AdminClients() {
               paddingTop: '5px'
             }}
             onClick={(e) => handleBackDelete(e)}/>}
-          {actualCompany < 1 ?
-            <button type="button" disabled>Delete Company</button> :
-            <><button type="button" onClick={(e) => handleDeleteAsk(e)}>Delete Company</button>
+          {actualClient < 1 ?
+            <button type="button" disabled>Delete Client</button> :
+            <><button type="button" onClick={(e) => handleDeleteAsk(e)}>Delete Client</button>
             <button
               className="deleteB"
               type="button"
@@ -337,14 +377,14 @@ export default function AdminClients() {
             >Are you sure?</button></>
           }
         </div>
-        {actualCompany === 0 ? <></> :
+        {actualClient === 0 ? <></> :
           <fieldset>
-            {actualCompany === -1 ? <legend><strong>Company creation</strong></legend> : <legend><strong>Detail of {name}</strong></legend>}
+            {actualClient === -1 ? <legend><strong>Client creation</strong></legend> : <legend><strong>Detail of {name}</strong></legend>}
             <ContainerData>
-            {actualCompany === -1 || editing ?
+            {actualClient === -1 || editing ?
               <form onSubmit={handleSubmit}>
                 <label htmlFor="name">
-                  Company name:
+                  Client name:
                   <input
                     type="text"
                     className="name"
@@ -403,18 +443,18 @@ export default function AdminClients() {
                     placeholder="Insert Company e-mail"
                   />
                 </label>
-                <label htmlFor="lsteam">
-                    Default Local Suport Team:
+                <label htmlFor="company">
+                    Company:
                     <SelectStyleLS
-                      id="lsteam"
-                      name="lsteam"
-                      value={localSupport}
-                      onChange={(e) => setLocalSupport(e.currentTarget.value)}
+                      id="company"
+                      name="company"
+                      value={companyID}
+                      onChange={(e) => setCompanyID(e.currentTarget.value)}
                     >
                     <option value="" disabled hidden>Choose here</option>
-                    {teamList.map((team) => (
-                        <option value={team.name} key={team.name}>
-                          {team.name}
+                    {companyList.map((company) => (
+                        <option value={company.id} key={company.id}>
+                          {company.name}
                         </option>
                       ))}
                     </SelectStyleLS>
@@ -446,10 +486,10 @@ export default function AdminClients() {
                 }
                 <span>
                   {editing ?
-                    <><button type="submit">Update Company</button>
+                    <><button type="submit">Update Client</button>
                     <button type="button" onClick={handleCancelEdit}>Cancel</button></>
                   :
-                    <><button type="submit">Create Company</button>
+                    <><button type="submit">Create Client</button>
                     <button type="button" onClick={() => clearData()}>Clear data</button></>
                   }
                 </span>
@@ -457,7 +497,7 @@ export default function AdminClients() {
             :
               <form>
                 <label htmlFor="name">
-                  Company name:
+                  Client name:
                   <input
                     type="text"
                     className="name"
@@ -510,11 +550,20 @@ export default function AdminClients() {
                     readOnly
                   />
                 </label>
-                <label htmlFor="lsteam">
+                <label htmlFor="company">
+                  Company:
+                  <input
+                    type="text"
+                    className="company"
+                    value={companyName}
+                    readOnly
+                  />
+                </label>
+                <label htmlFor="dls">
                   Default Local Support Team:
                   <input
                     type="text"
-                    className="lsteam"
+                    className="dls"
                     value={localSupport}
                     readOnly
                   />

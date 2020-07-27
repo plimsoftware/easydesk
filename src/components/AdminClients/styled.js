@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
     margin-left: 20px;
     overflow-y: scroll;
-    height: 100px;
+    height: 150px;
 
     table {
       width: 100%;
@@ -29,7 +29,7 @@ export const ContainerData = styled.div`
     margin-top: 20px;
     margin-left: 20px;
     overflow-y: scroll;
-    height: 425px;
+    height: 375px;
 
     form {
       display: flex;
