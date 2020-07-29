@@ -66,6 +66,14 @@ export default function Menu({ setPage, waitMessage, setWaitMessage }) {
       waitQuestion = false;
       setWaitMessage(false);
     }
+
+    if (waitMessage === 'admingoprofiles') {
+      dispatch(actions.isEditing({ isEditing: false, response: '' }));
+      setPage('AdminProfiles');
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      waitQuestion = false;
+      setWaitMessage(false);
+    }
   }, [waitMessage, dispatch, setPage]);
 
   const resetMenu = () => {
@@ -207,7 +215,7 @@ export default function Menu({ setPage, waitMessage, setWaitMessage }) {
               <button type="button" className="menuButtom">Categories</button>
               <button type="button" className="menuButtom" onClick={() => handleAdmPage('AdminUsers', 'admingousers')}>Users</button>
               <button type="button" className="menuButtom" onClick={() => handleAdmPage('AdminTeams', 'admingoteams')}>Teams</button>
-              <button type="button" className="menuButtom">Profiles</button>
+              <button type="button" className="menuButtom" onClick={() => handleAdmPage('AdminProfiles', 'admingoprofiles')}>Profiles</button>
             </div>
         </Container>
     );
