@@ -10,7 +10,7 @@ export default createGlobalStyle`
 
 body {
     font-family: sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     color: black;
     background-color: black;
 }

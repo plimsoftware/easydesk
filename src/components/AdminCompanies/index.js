@@ -10,7 +10,7 @@ import formatData from '../../modules/FormatData'
 
 import axios from '../../services/axios';
 
-export default function AdminClients() {
+export default function AdminCompanies() {
   const [companyList, setCompanyList] = useState([]);
   const [teamList, setTeamList] = useState([]);
   const [actualCompany, setActualCompany] = useState(0);
@@ -35,7 +35,7 @@ export default function AdminClients() {
   useEffect(() => {
     async function getData() {
       try {
-        const responseCompany = await axios.get('/company/');
+        const responseCompany = await axios.get('/company/?full=true');
         setCompanyList(responseCompany.data);
       } catch (err) {
         console.log(err);

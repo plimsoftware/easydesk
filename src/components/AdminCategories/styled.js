@@ -30,7 +30,6 @@ export const ContainerData = styled.div`
     margin-left: 20px;
     overflow-y: scroll;
     height: 425px;
-    font-size: 12px;
 
     form {
       display: flex;
@@ -39,26 +38,19 @@ export const ContainerData = styled.div`
       label {
         display: flex;
         flex-direction: column;
+        font-size: 12px;
         margin-bottom: 10px;
       }
 
       input {
         height: 20px;
+        font-size: 12px;
         width: 95%;
-        font-size: 13px;
         border: 1px solid #ddd;
         padding: 0 10px;
         border-radius: 5px;
         background-color: #bfbfbf;
       }
-    }
-
-    fieldset {
-      height: 100px;
-    }
-
-    .spanprofile {
-      padding: 20px;
     }
 `;
 
@@ -107,11 +99,7 @@ export const MainContainer = styled.div`
     }
 
     .tdname {
-      width: 45%;
-    }
-
-    .tdlst {
-      width: 20%;
+      width: 35%;
     }
 
     .tdstatus {
@@ -119,19 +107,15 @@ export const MainContainer = styled.div`
     }
 
     .thid {
-      width: 5%;
+      width: 10%;
     }
 
     .thname {
-      width: 58%;
-    }
-
-    .thlst {
-      width: 25%;
+      width: 67%;
     }
 
     .thstatus {
-      width: 15%;
+      width: 5%;
     }
 `;
 
@@ -144,9 +128,9 @@ export const SelectStyle = styled.select`
   padding: 3px;
 `;
 
-export const SelectStyleProf = styled.select`
+export const SelectStyleLS = styled.select`
 
-  width: 250px;
+  width: 200px;
   position: relative;
   font-size: 12px;
   margin: 5px;

@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { isEmail } from 'validator';
 import { FaUndo } from 'react-icons/fa';
 
 import { Container, ContainerData, MainContainer, SelectStyle } from './styled';
 import * as actions from '../../store/modules/auth/actions';
 import formatData from '../../modules/FormatData'
-
-
 import axios from '../../services/axios';
-import { stat } from 'fs';
+
 
 export default function AdminProfiles() {
   const [profileList, setProfileList] = useState([]);
@@ -55,7 +52,7 @@ export default function AdminProfiles() {
   useEffect(() => {
     async function getData() {
       try {
-        const responseProfile = await axios.get('/profile/');
+        const responseProfile = await axios.get('/profile/?full=true');
         setProfileList(responseProfile.data);
       } catch (err) {
         console.log(err);

@@ -39,7 +39,7 @@ export default function AdminCompanies() {
     async function getData() {
       try {
         if (companyFilter === '') {
-          const responseClient = await axios.get('/clients/');
+          const responseClient = await axios.get('/clients/?full=true');
           setClientsList(responseClient.data);
         } else {
           const responseClient = await axios.get(`/clients/?companyid=${companyFilter}`);

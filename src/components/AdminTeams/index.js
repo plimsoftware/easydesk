@@ -30,7 +30,7 @@ export default function AdminTeams() {
   useEffect(() => {
     async function getData() {
       try {
-        const responseTeam = await axios.get('/teams/');
+        const responseTeam = await axios.get('/teams/?full=true');
         setTeamList(responseTeam.data);
       } catch (err) {
         console.log(err);

@@ -30,6 +30,7 @@ export const ContainerData = styled.div`
     margin-left: 20px;
     overflow-y: scroll;
     height: 425px;
+    font-size: 12px;
 
     form {
       display: flex;
@@ -38,13 +39,13 @@ export const ContainerData = styled.div`
       label {
         display: flex;
         flex-direction: column;
-        font-size: 14px;
         margin-bottom: 10px;
       }
 
       input {
-        height: 25px;
+        height: 20px;
         width: 95%;
+        font-size: 12px;
         font-size: 13px;
         border: 1px solid #ddd;
         padding: 0 10px;
@@ -143,6 +144,7 @@ export const SelectStyle = styled.select`
 
   width: 100px;
   position: relative;
+  font-size: 12px;
   margin: 5px;
   padding: 3px;
 `;

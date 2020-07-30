@@ -38,7 +38,7 @@ export default function AdminUsers() {
   useEffect(() => {
     async function getData() {
       try {
-        const responseTeam = await axios.get('/users/');
+        const responseTeam = await axios.get('/users/?full=true');
         setUserList(responseTeam.data);
       } catch (err) {
         console.log(err);
