@@ -31,6 +31,41 @@ export const ContainerData = styled.div`
     overflow-y: scroll;
     height: 425px;
 
+    span {
+      display: flex;
+      flex-direction: rown;
+
+      label {
+        margin-right: 20px;
+      }
+    }
+
+    .divlevel {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 15px;
+
+      span {
+        margin-right: 10px;
+      }
+    }
+
+    .btlv {
+      margin-left: 10px;
+      font-size: 10px;
+      width: 100px;
+      height: 25px;
+    }
+
+    .newdescription {
+      margin-left: 10px;
+      margin-right: 10px;
+      padding-left: 5px;
+      font-size: 10px;
+      width: 200px;
+      height: 25px;
+    }
+
     form {
       display: flex;
       flex-direction: column;
@@ -102,8 +137,12 @@ export const MainContainer = styled.div`
       width: 35%;
     }
 
+    .tdtype {
+      width: 5%;
+    }
+
     .tdstatus {
-      width: 10%;
+      width: 5%;
     }
 
     .thid {
@@ -111,11 +150,23 @@ export const MainContainer = styled.div`
     }
 
     .thname {
-      width: 67%;
+      width: 65%;
+    }
+
+    .thtype {
+      width: 9%;
     }
 
     .thstatus {
-      width: 5%;
+      width: 6%;
+    }
+
+    .lsteam {
+      width: 300px;
+    }
+
+    .status {
+      width: 100px;
     }
 `;
 

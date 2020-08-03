@@ -322,8 +322,8 @@ export default function AdminUsers() {
          <legend><strong>Users List</strong></legend>
           <section>
               <div className="thid">Id</div>
-              <div className="thname">Name</div>
               <div className="thlst">Username</div>
+              <div className="thname">Name</div>
               <div className="thstatus">Status</div>
             </section>
           <Container>
@@ -333,8 +333,8 @@ export default function AdminUsers() {
                   userList.map((user) => (
                     <tr key={user.id} onClick={() => handleTrClick(user.id)}>
                       <td className="tdid">{user.id}</td>
-                      <td className="tdname">{user.name}</td>
                       <td className="tdlst">{user.username}</td>
+                      <td className="tdname">{user.name}</td>
                       <td className="tdstatus">{user.active ? 'Active' : 'Disabled' }</td>
                     </tr>
                   ))

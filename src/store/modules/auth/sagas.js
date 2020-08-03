@@ -13,6 +13,11 @@ function* loginRequest({ payload }) {
       return;
     }
 
+    if (!data.active) {
+      yield put(actions.loginFailure({ msg: `The account of ${payload.userid} is disabled` }));
+      return;
+    }
+
     const response = yield call(axios.post, '/tokens', payload);
     yield put(actions.loginSuccess({ ...response.data, id: data.id,  }));
 
