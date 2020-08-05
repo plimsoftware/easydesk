@@ -246,7 +246,7 @@ export default function AdminTeams() {
           msgType: 'info'
         }));
 
-        dispatch(actions.isEditing({ isEditing: true }));
+        dispatch(actions.isEditing({ isEditing: false }));
 
       } catch (err) {
         console.log(err);

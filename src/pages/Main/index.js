@@ -11,6 +11,7 @@ import AdminClients from '../../components/AdminClients';
 import AdminProfiles from '../../components/AdminProfiles';
 import AdminCategories from '../../components/AdminCategories';
 import MessageWin from '../../components/MessageWin';
+import Header from '../../components/Header';
 
 export default function Main() {
 
@@ -20,6 +21,7 @@ export default function Main() {
 
     return (
         <Container>
+        <Header />
             <div className="split left">
                 <div className="centered">
                     <Menu setPage={(page) => setCurrentPage(page)}

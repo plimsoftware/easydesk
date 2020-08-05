@@ -7,9 +7,8 @@ import axios from '../../services/axios';
 import history from '../../services/history';
 import * as actions from '../../store/modules/auth/actions';
 import MessageWin from '../../components/MessageWin';
-import Header from '../../components/Header';
 
-export default function Login() {
+export default function UserList() {
   const [password, setPassword] = useState ('');
   const [repassword, setRepassword] = useState('');
   const { msgEnabled, msg, msgType } = useSelector((state) => state.auth.messageWinState);
@@ -54,26 +53,10 @@ export default function Login() {
 
   return (
       <Container>
-      <Header />
         <MessageWin msgEnabled={msgEnabled} message={msg} msgType={msgType} />
-        <img src={logo} className="imglogo" alt="Easy Desk logo" />
         <span style={{ fontSize: '10px'}}>V 1.0.0</span>
-        <h1>You need to Change your Password</h1>
-        <Form onSubmit={handleSubmit}>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.currentTarget.value)}
-            placeholder="Type Password"
-            />
-          <input
-            type="password"
-            value={repassword}
-            onChange={(e) => setRepassword(e.currentTarget.value)}
-            placeholder="Retype Password"
-            />
-          <Button type="submit">Change Password</Button>
-        </Form>
+        <h1>User List</h1>
+
       </Container>
     );
 }

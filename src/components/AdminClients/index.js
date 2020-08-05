@@ -165,6 +165,22 @@ export default function AdminCompanies() {
     setRunOnce(true);
   };
 
+  async function updateAddress(e) {
+    setCompanyID(e.currentTarget.value);
+
+    try {
+      const { data } = await axios.get(`/company/${e.currentTarget.value}`);
+
+      setAddress(data.address);
+      setLocationcp(data.locationcp);
+      setLocation(data.location);
+
+    } catch (err) {
+      console.log(err);
+    }
+
+  };
+
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -253,7 +269,7 @@ export default function AdminCompanies() {
           msgType: 'info'
         }));
 
-        dispatch(actions.isEditing({ isEditing: true }));
+        dispatch(actions.isEditing({ isEditing: false }));
 
       } catch (err) {
         console.log(err);
@@ -383,6 +399,22 @@ export default function AdminCompanies() {
             <ContainerData>
             {actualClient === -1 || editing ?
               <form onSubmit={handleSubmit}>
+                <label htmlFor="company">
+                    Company:
+                    <SelectStyleLS
+                      id="company"
+                      name="company"
+                      value={companyID}
+                      onChange={(e) => updateAddress(e)}
+                    >
+                    <option value="" disabled hidden>Choose here</option>
+                    {companyList.map((company) => (
+                        <option value={company.id} key={company.id}>
+                          {company.name}
+                        </option>
+                      ))}
+                    </SelectStyleLS>
+                </label>
                 <label htmlFor="name">
                   Client name:
                   <input
@@ -443,22 +475,6 @@ export default function AdminCompanies() {
                     placeholder="Insert Company e-mail"
                   />
                 </label>
-                <label htmlFor="company">
-                    Company:
-                    <SelectStyleLS
-                      id="company"
-                      name="company"
-                      value={companyID}
-                      onChange={(e) => setCompanyID(e.currentTarget.value)}
-                    >
-                    <option value="" disabled hidden>Choose here</option>
-                    {companyList.map((company) => (
-                        <option value={company.id} key={company.id}>
-                          {company.name}
-                        </option>
-                      ))}
-                    </SelectStyleLS>
-                  </label>
                 { editing ?
                   <label htmlFor="status">
                     Status:

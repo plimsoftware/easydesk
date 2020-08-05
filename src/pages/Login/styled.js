@@ -3,14 +3,14 @@ import styled from 'styled-components';
 export const Container = styled.section`
   position: fixed;
   overflow-x: hidden;
-  margin-top: 54px;
   width: 100%;
   height: 100%;
   background-color: #ADACAC;
   text-align: center;
-  padding-top: 50px;
-  display: block;
 
+  .imglogo {
+    margin-top: 150px;
+  }
 
   h1 {
     margin-top: 50px;

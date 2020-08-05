@@ -8,6 +8,7 @@ import axios from '../../services/axios';
 import history from '../../services/history';
 import * as actions from '../../store/modules/auth/actions';
 import MessageWin from '../../components/MessageWin';
+import Header from '../../components/Header';
 
 export default function Login() {
   const [userid, setUserID] = useState ('');
@@ -49,8 +50,9 @@ export default function Login() {
 
   return (
       <Container>
+      <Header />
         <MessageWin msgEnabled={msgEnabled} message={msg} msgType={msgType} />
-        <img src={logo} alt="Easy Desk logo" />
+        <img src={logo} className="imglogo" alt="Easy Desk logo" />
         <span style={{ fontSize: '10px'}}>V 1.0.0</span>
         <h1>Welcome to Easy Desk Management</h1>
         <Form onSubmit={handleSubmit}>

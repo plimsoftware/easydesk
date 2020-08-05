@@ -6,9 +6,10 @@ import { FaUndo } from 'react-icons/fa';
 import { Container, ContainerData, MainContainer, SelectStyle, SelectStyleLS } from './styled';
 import * as actions from '../../store/modules/auth/actions';
 import formatData from '../../modules/FormatData'
-
-
 import axios from '../../services/axios';
+
+// import { ipcRenderer } from 'electron';
+const {ipcRenderer} = window.require("electron")
 
 export default function AdminCompanies() {
   const [companyList, setCompanyList] = useState([]);
@@ -29,6 +30,7 @@ export default function AdminCompanies() {
   const [runOnce, setRunOnce] = useState (true);
   const [editing, setEditing] = useState (false);
   const [deleteAsk, setDeleteAsk] = useState (false);
+  const [message, setMessage] = useState('');
 
   const dispatch = useDispatch();
 
@@ -89,6 +91,10 @@ export default function AdminCompanies() {
     setPhone('');
     setEmail('');
     setActive('');
+  }
+
+  function handleNewWindow() {
+    ipcRenderer.send('asynchronous-message', 'userlist');
   }
 
   const handleCancelCreate = () => {
@@ -241,7 +247,7 @@ export default function AdminCompanies() {
           msgType: 'info'
         }));
 
-        dispatch(actions.isEditing({ isEditing: true }));
+        dispatch(actions.isEditing({ isEditing: false }));
 
       } catch (err) {
         console.log(err);
@@ -564,6 +570,7 @@ export default function AdminCompanies() {
                     readOnly
                   />
                 </label>
+                <button type="button" onClick={()=> handleNewWindow()} >Show Clients</button>
               </form>
             }
             </ContainerData>
