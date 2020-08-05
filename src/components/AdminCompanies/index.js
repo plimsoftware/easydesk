@@ -8,7 +8,6 @@ import * as actions from '../../store/modules/auth/actions';
 import formatData from '../../modules/FormatData'
 import axios from '../../services/axios';
 
-// import { ipcRenderer } from 'electron';
 const {ipcRenderer} = window.require("electron")
 
 export default function AdminCompanies() {
@@ -94,7 +93,7 @@ export default function AdminCompanies() {
   }
 
   function handleNewWindow() {
-    ipcRenderer.send('asynchronous-message', 'userlist');
+    ipcRenderer.send('asynchronous-message', {type: 'clientlist', id: actualCompany});
   }
 
   const handleCancelCreate = () => {

@@ -30,10 +30,13 @@ function createWindow() {
 
     // mainWindow.setMenu(null);
 
-    mainWindow.on("closed", () => (mainWindow = null));
+    mainWindow.on("closed", () => {
+      mainWindow = null;
+      if (childwindow) childwindow.close();
+    });
 }
 
-function childWindow() {
+function childWindow(type) {
   childwindow = new BrowserWindow({
     width: 400,
     height: 600,
@@ -50,8 +53,8 @@ function childWindow() {
 
   childwindow.loadURL(
       isDev
-      ? "http://localhost:3000/userlist"
-      : `file://${path.join(__dirname, "../build/index.html#/userlist")}`
+      ? `http://localhost:3000/${type}`
+      : `file://${path.join(__dirname, `../build/index.html#/${type}`)}`
       );
 
   childwindow.setMenu(null);
@@ -79,6 +82,15 @@ app.on("resize", function () {
   var height = size[1];
 });
 
-ipcMain.on('asynchronous-message', (event, arg) => {
-  if (arg === 'userlist') childWindow();
+ipcMain.on('asynchronous-message', (event, arg) => {7
+  if (arg.type === 'clientlist') {
+    childWindow('clientlist');
+    childwindow.custom = {
+      'clientid': arg.id,
+  };
+  }
+
+  if (arg.type === 'userlist') {
+    childWindow('userlist');
+  }
 })

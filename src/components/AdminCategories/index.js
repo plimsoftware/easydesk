@@ -20,6 +20,7 @@ export default function AdminCategories() {
   const [newDescription, setNewDescription] = useState ('');
   const [parent, setParent] = useState (0);
   const [active, setActive] = useState ('');
+  const [statusFilter, setStatusFilter] = useState ('');
   const [createdat, setCreatedat] = useState ('');
   const [updatedat, setUpdatedat] = useState ('');
   const [createdby, setCreatedby] = useState ('');
@@ -35,8 +36,14 @@ export default function AdminCategories() {
   useEffect(() => {
     async function getData() {
       try {
-        const responseCompany = await axios.get('/category/?full=true');
-        setCategoryList(responseCompany.data);
+        if (statusFilter.length > 0) {
+          const responseCompany = await axios.get(`/category/?type=${statusFilter}`);
+          setCategoryList(responseCompany.data);
+        } else {
+          const responseCompany = await axios.get('/category/?full=true');
+          setCategoryList(responseCompany.data);
+        }
+
       } catch (err) {
         console.log(err);
       }
@@ -302,6 +309,27 @@ export default function AdminCategories() {
           <Container>
             <table>
               <tbody>
+                <tr>
+                <td className="tdid"> </td>
+                <td className="tdname"> </td>
+                <td className="tdsp">
+                    <SelectStyleLS
+                      id="status"
+                      name="status"
+                      value={statusFilter}
+                      onChange={(e) => {
+                        setStatusFilter(e.currentTarget.value);
+                        setRunOnce(true);
+                      }}
+                    >
+                    {statusFilter === '' ? <option value="" hidden>Filter by ...</option> : <option value="">All</option>}
+                    <option value="inc">inc</option>
+                    <option value="req">req</option>
+                    <option value="chg">chg</option>
+                    </SelectStyleLS>
+                </td>
+                <td className="tdstatus"> </td>
+                </tr>
                 {categoryList.length !== 0 ? (
                   categoryList.map((category) => (
                     <tr key={category.id} onClick={() => handleTrClick(category.id)}>

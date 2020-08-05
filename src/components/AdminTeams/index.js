@@ -5,9 +5,9 @@ import { FaUndo, FaTrashAlt } from 'react-icons/fa';
 import { Container, ContainerData, MainContainer, SelectStyle } from './styled';
 import * as actions from '../../store/modules/auth/actions';
 import formatData from '../../modules/FormatData'
-
-
 import axios from '../../services/axios';
+
+const {ipcRenderer} = window.require("electron")
 
 export default function AdminTeams() {
   const [teamList, setTeamList] = useState([]);
@@ -69,6 +69,10 @@ export default function AdminTeams() {
     setActive('');
     setUsername('');
     setLocalSupport(false);
+  }
+
+  function handleNewWindow() {
+    ipcRenderer.send('asynchronous-message', {type: 'userlist'});
   }
 
   const handleCancelCreate = () => {
@@ -450,6 +454,7 @@ export default function AdminTeams() {
                 placeholder="Insert Username"
               />
               <button type="button" onClick={handleAddMember}>Add Member</button>
+              <button type="button" onClick={()=> handleNewWindow()}>Show Members</button>
               </>
             }
           </>

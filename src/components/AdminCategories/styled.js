@@ -184,6 +184,6 @@ export const SelectStyleLS = styled.select`
   width: 200px;
   position: relative;
   font-size: 12px;
-  margin: 5px;
-  padding: 3px;
+  margin: 2px;
+  padding: 2px;
 `;
