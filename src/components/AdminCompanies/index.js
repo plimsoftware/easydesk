@@ -29,7 +29,6 @@ export default function AdminCompanies() {
   const [runOnce, setRunOnce] = useState (true);
   const [editing, setEditing] = useState (false);
   const [deleteAsk, setDeleteAsk] = useState (false);
-  const [message, setMessage] = useState('');
 
   const dispatch = useDispatch();
 

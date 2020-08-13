@@ -77,7 +77,7 @@ export default function AdminCategories() {
     }
 
     if (runOnce) getData();
-  }, [runOnce, actualCategory]);
+  }, [runOnce, actualCategory, statusFilter]);
 
   const handleCreate = () => {
     clearData();

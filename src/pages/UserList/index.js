@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Container, Form, Button } from './styled';
+import { Container } from './styled';
 import axios from '../../services/axios';
 
 export default function UserList() {

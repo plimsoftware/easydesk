@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.section`
   position: fixed;
   overflow-x: hidden;
+  overflow-y: scroll;
   width: 100%;
   height: 100%;
   background-color: #ADACAC;
